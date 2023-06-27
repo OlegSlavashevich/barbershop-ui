@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://barbershop-api-one.vercel.app/:match*"
+      "destination": "https://barbershop-api-one.vercel.app/api/:match*"
     }
   ]
 }
