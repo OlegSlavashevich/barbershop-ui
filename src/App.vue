@@ -16,7 +16,15 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import HeaderVue from './components/Header/Header.vue';
+import { useTelegram } from './composables/useTelegram';
+
+const { tg } = useTelegram();
+
+onMounted(() => {
+  tg.ready();
+});
 </script>
 
 <style>

@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDateStore } from '../store/date';
 import { useServicesStore } from '../store/services';
@@ -45,7 +45,7 @@ const dateStore = useDateStore();
 const masterStore = useMastersStore();
 const servicesStore = useServicesStore();
 
-const { user } = useTelegram();
+const { user, tg } = useTelegram();
 
 const router = useRouter();
 
@@ -85,6 +85,20 @@ const items = computed(() => [
 const allDataIsFieldIn = computed(
   () => dateStore.date && dateStore.time && masterStore.master.id && servicesStore.services.length,
 );
+
+onMounted(() => {
+  tg.MainButton.setParams({
+    text: 'Забронировать',
+  });
+});
+
+watchEffect(() => {
+  if (allDataIsFieldIn.value) {
+    tg.MainButton.show();
+  } else {
+    tg.MainButton.hide();
+  }
+});
 
 const onBookingButtonClick = () => {
   router.push('/booking');
