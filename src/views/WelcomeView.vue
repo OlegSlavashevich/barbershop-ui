@@ -27,15 +27,12 @@
         <v-divider class="mx-4"></v-divider>
       </div>
     </v-list>
-    <div v-if="allDataIsFieldIn" class="mt-8 flex items-center justify-center">
-      <v-btn @click="onBookingButtonClick" app depressed class="w-72">Оформить визит</v-btn>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
+import BookingApi from '@/api/booking.api';
 import { useDateStore } from '../store/date';
 import { useServicesStore } from '../store/services';
 import { useMastersStore } from '../store/masters';
@@ -45,9 +42,7 @@ const dateStore = useDateStore();
 const masterStore = useMastersStore();
 const servicesStore = useServicesStore();
 
-const { user, tg } = useTelegram();
-
-const router = useRouter();
+const { user, tg, queryId } = useTelegram();
 
 const items = computed(() => [
   {
@@ -86,10 +81,32 @@ const allDataIsFieldIn = computed(
   () => dateStore.date && dateStore.time && masterStore.master.id && servicesStore.services.length,
 );
 
+const submit = async () => {
+  const bookingInfo = {
+    queryId,
+    client: {
+      name: user.first_name || 'test',
+      phone: user.last_name || 'test',
+    },
+    reception: {
+      date: dateStore.date,
+      startTime: dateStore.time,
+      masterId: masterStore.master.id,
+      services: servicesStore.services.map((service) => service._id),
+    },
+  };
+  await BookingApi.booking(bookingInfo);
+};
+
 onMounted(() => {
   tg.MainButton.setParams({
     text: 'Забронировать',
   });
+
+  tg.onEvent('mainButtonClicked', submit);
+  return () => {
+    tg.offEvent('mainButtonClicked', submit);
+  };
 });
 
 watchEffect(() => {
@@ -99,8 +116,4 @@ watchEffect(() => {
     tg.MainButton.hide();
   }
 });
-
-const onBookingButtonClick = () => {
-  router.push('/booking');
-};
 </script>
