@@ -8,7 +8,6 @@
               <div class="mt-28 overflow-y-auto">
                 <router-view />
               </div>
-              <FooterVue />
             </div>
         </div>
       </div>
@@ -18,7 +17,6 @@
 
 <script setup>
 import HeaderVue from './components/Header/Header.vue';
-import FooterVue from './components/Footer/Footer.vue';
 </script>
 
 <style>
