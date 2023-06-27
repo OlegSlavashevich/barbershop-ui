@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:5050';
+export const BASE_URL = 'https://barbershop-api-one.vercel.app/';
 
 export const ALLOWED_TIMES = {
   START_TIME: '10:00',
