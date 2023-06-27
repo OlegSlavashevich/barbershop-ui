@@ -3,7 +3,7 @@
     <v-main>
       <div class="pointer-events-none fixed inset-y-0 flex max-w-full">
         <div class="pointer-events-auto relative w-screen">
-          <div class="flex h-full flex-col bg-white pb-14 shadow-xl">
+          <div class="flex h-full flex-col bg-white shadow-xl">
               <HeaderVue />
               <div class="mt-28 overflow-y-auto">
                 <router-view />
