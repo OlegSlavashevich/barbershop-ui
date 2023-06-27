@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-list app>
+      <div>{{ user }}</div>
       <div v-for="item in items" :key="item.id">
         <v-list-item
           @click="$router.push(item.link)"
@@ -38,10 +39,13 @@ import { useRouter } from 'vue-router';
 import { useDateStore } from '../store/date';
 import { useServicesStore } from '../store/services';
 import { useMastersStore } from '../store/masters';
+import { useTelegram } from '../composables/useTelegram';
 
 const dateStore = useDateStore();
 const masterStore = useMastersStore();
 const servicesStore = useServicesStore();
+
+const { user } = useTelegram();
 
 const router = useRouter();
 
