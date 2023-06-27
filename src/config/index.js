@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://barbershop-ui.vercel.app/';
+export const BASE_URL = '';
 
 export const ALLOWED_TIMES = {
   START_TIME: '10:00',
